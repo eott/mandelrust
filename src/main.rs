@@ -74,8 +74,8 @@ fn main() {
     let mut writer = BufWriter::new(output_file);
     write!(&mut writer, "P3\n{} {}\n255\n", WIDTH, HEIGHT).unwrap();
 
-    for x in 0..WIDTH {
-        for y in 0..HEIGHT {
+    for y in 0..WIDTH {
+        for x in 0..HEIGHT {
             let c = Complex::new(
                 DIMENSION[0] + step_img * y as f64,
                 DIMENSION[2] + step_real * x as f64
