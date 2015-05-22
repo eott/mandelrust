@@ -1,6 +1,7 @@
 use std::fs::File;
 use std::io::BufWriter;
 use std::io::prelude::*;
+use std::cmp::min;
 
 struct Complex {
     img: f64,
@@ -56,6 +57,9 @@ fn check_for_member_of_set(c_0: &Complex, max_iter: i32) -> i32{
     max_iter
 }
 
+fn get_color_for_iterations(count: i32) -> [i32; 3] {
+    [min(count, 255), min(count * 4, 255), min(count * 10, 255)]
+}
 
 fn main() {
     const WIDTH: i32 = 100;
@@ -77,8 +81,10 @@ fn main() {
                 DIMENSION[2] + step_real * x as f64
             );
 
-            let _iterations = check_for_member_of_set(&c, MAX_ITER);
-            //write!(&mut writer, "{} {} {} ", sum[0], sum[1], sum[2]).unwrap();
+            let iterations = check_for_member_of_set(&c, MAX_ITER);
+            let color = get_color_for_iterations(iterations);
+
+            write!(&mut writer, "{} {} {} ", color[0], color[1], color[2]).unwrap();
         }
     }
 }
