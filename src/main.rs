@@ -15,7 +15,14 @@ impl Complex {
         }
     }
 
-    fn add(&self, other: Complex) -> Complex {
+    fn clone(&self) -> Complex {
+        Complex {
+            img: self.img,
+            real: self.real,
+        }
+    }
+
+    fn add(&self, other: &Complex) -> Complex {
         Complex {
             img: self.img + other.img,
             real: self.real + other.real,
@@ -34,18 +41,44 @@ impl Complex {
     }
  }
 
+fn check_for_member_of_set(c_0: &Complex, max_iter: i32) -> i32{
+    let mut c = c_0.clone();
+
+    for i in 0..max_iter {
+
+        if c.abs() > 2.0 {
+            return i;
+        }
+
+        c = c.square().add(c_0);
+    }
+
+    max_iter
+}
+
+
 fn main() {
-    const WIDTH: i64 = 100;
-    const HEIGHT: i64 = 100;
+    const WIDTH: i32 = 100;
+    const HEIGHT: i32 = 100;
+    const MAX_ITER: i32 = 300;
+    const DIMENSION: [f64; 4] = [-2.0, 2.0, -2.0, 2.0];
+
+    let step_img = (DIMENSION[1] - DIMENSION[0]) / HEIGHT as f64;
+    let step_real = (DIMENSION[3] - DIMENSION[2]) / WIDTH as f64;
 
     let output_file = File::create("image.ppm").unwrap();
     let mut writer = BufWriter::new(output_file);
     write!(&mut writer, "P3\n{} {}\n255\n", WIDTH, HEIGHT).unwrap();
 
-    for _y in 0..WIDTH {
-        for _x in 0..HEIGHT {
-            let sum = vec![0, 150, 0];
-            write!(&mut writer, "{} {} {} ", sum[0], sum[1], sum[2]).unwrap();
+    for x in 0..WIDTH {
+        for y in 0..HEIGHT {
+            let c = Complex::new(
+                DIMENSION[0] + step_img * y as f64,
+                DIMENSION[2] + step_real * x as f64
+            );
+
+            let _iterations = check_for_member_of_set(&c, MAX_ITER);
+            //write!(&mut writer, "{} {} {} ", sum[0], sum[1], sum[2]).unwrap();
         }
     }
 }
