@@ -62,10 +62,10 @@ fn get_color_for_iterations(count: i32) -> [i32; 3] {
 }
 
 fn main() {
-    const WIDTH: i32 = 100;
-    const HEIGHT: i32 = 100;
-    const MAX_ITER: i32 = 300;
-    const DIMENSION: [f64; 4] = [-2.0, 2.0, -2.0, 2.0];
+    const WIDTH: i32 = 2000;
+    const HEIGHT: i32 = 2000;
+    const MAX_ITER: i32 = 255;
+    const DIMENSION: [f64; 4] = [-2.2, 2.2, -2.5, 1.0];
 
     let step_img = (DIMENSION[1] - DIMENSION[0]) / HEIGHT as f64;
     let step_real = (DIMENSION[3] - DIMENSION[2]) / WIDTH as f64;
