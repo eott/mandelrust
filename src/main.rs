@@ -14,7 +14,25 @@ impl Complex {
             real: r
         }
     }
-}
+
+    fn add(&self, other: Complex) -> Complex {
+        Complex {
+            img: self.img + other.img,
+            real: self.real + other.real,
+        }
+    }
+
+    fn square(&self) -> Complex {
+        Complex {
+            img: 2.0 * self.img * self.real,
+            real: self.real * self.real - self.img * self.img
+        }
+    }
+
+    fn abs(&self) -> f64 {
+        (self.img * self.img + self.real * self.real).sqrt()
+    }
+ }
 
 fn main() {
     const WIDTH: i64 = 100;
